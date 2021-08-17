@@ -1,4 +1,4 @@
-use std::fmt::Display;
+use std::{env::args, fmt::Display};
 
 use tokio::{fs::File, io::{self, AsyncBufReadExt, AsyncWriteExt, BufReader, BufWriter}, sync::mpsc::channel};
 
@@ -48,7 +48,13 @@ pub struct LedgerItem {
 
 #[tokio::main]
 async fn main() -> io::Result<()> {
-    let filename = "transactions.csv";
+    let filename = if let Some(filename) = args().nth(1) {
+        filename
+    } else {
+        eprintln!("transaction-processor <filename>");
+
+        return Ok(());
+    };
 
     let input = File::open(filename).await?;
 
