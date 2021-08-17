@@ -1,20 +1,21 @@
 use std::fmt::Display;
 
-use processor::parse_line;
 use tokio::{fs::File, io::{self, AsyncBufReadExt, AsyncWriteExt, BufReader, BufWriter}, sync::mpsc::channel};
-use tx_amount::TxAmount;
-
-use crate::account_manager::AccountManagerLoadbalancer;
 
 mod account;
 mod account_manager;
 mod error;
 mod processor;
 mod transaction;
-mod tx_amount;
+mod fp_isize;
+
+use processor::parse_line;
+use fp_isize::FpIsize;
+use account_manager::AccountManagerLoadbalancer;
 
 pub type ClientID   = u16;
 pub type TxID       = u32;
+pub type TxAmount   = FpIsize<4>;
 
 #[derive(PartialEq, Eq, PartialOrd, Ord, Debug, Clone, Copy)]
 pub enum LedgerAction {

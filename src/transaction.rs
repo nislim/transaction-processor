@@ -29,7 +29,7 @@ pub enum TransactionError {
 impl Transaction {
 
     pub fn deposit(amount: TxAmount) -> Result<(Self, TransactionDelta), TransactionError> {
-        if amount < TxAmount::zero() {
+        if amount < FpIsize::zero() {
             Err(TransactionError::NegativeDeposit)
         } else {
             Ok((
@@ -39,14 +39,14 @@ impl Transaction {
                 },
                 TransactionDelta {
                     available:  amount,
-                    held:       TxAmount::zero(),
+                    held:       FpIsize::zero(),
                 }
             ))
         }
     }
 
     pub fn withdraw(amount: TxAmount) -> Result<(Self, TransactionDelta), TransactionError> {
-        if amount < TxAmount::zero() {
+        if amount < FpIsize::zero() {
             Err(TransactionError::NegativeWithdrawal)
         } else {
             let amount = -amount;
@@ -58,7 +58,7 @@ impl Transaction {
                 },
                 TransactionDelta {
                     available:  amount,
-                    held:       TxAmount::zero(),
+                    held:       FpIsize::zero(),
                 }
             ))
         }
@@ -95,7 +95,7 @@ impl Transaction {
             self.state = TransactionState::Chargeback;
 
             Ok(TransactionDelta {
-                available:  TxAmount::zero(),
+                available:  FpIsize::zero(),
                 held:      -self.amount
             })
         } else {

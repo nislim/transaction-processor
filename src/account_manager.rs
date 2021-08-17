@@ -2,7 +2,7 @@ use std::{collections::{BTreeMap, btree_map::Iter}, convert::TryFrom};
 
 use tokio::{sync::mpsc::{Sender, channel}, task::JoinHandle};
 
-use crate::{ClientID, LedgerItem, account::Account, error::ProcessorError, tx_amount::TxAmount};
+use crate::{ClientID, LedgerItem, account::Account, error::ProcessorError, TxAmount};
 
 pub struct AccountManager {
     accounts: BTreeMap<ClientID, Account>

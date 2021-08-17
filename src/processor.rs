@@ -157,7 +157,7 @@ mod test {
 
         assert_eq!(tx.client_id, 1);
         assert_eq!(tx.tx_id, 1);
-        assert_eq!(tx.action, LedgerAction::Deposit(TxAmount::new(11000)));
+        assert_eq!(tx.action, LedgerAction::Deposit(FpIsize::new(11000)));
     }
 
     #[test]
@@ -166,7 +166,7 @@ mod test {
 
         assert_eq!(tx.client_id, 1);
         assert_eq!(tx.tx_id, 1);
-        assert_eq!(tx.action, LedgerAction::Withdrawal(TxAmount::new(11000)));
+        assert_eq!(tx.action, LedgerAction::Withdrawal(FpIsize::new(11000)));
     }
 
     #[test]
