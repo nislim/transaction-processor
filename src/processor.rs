@@ -1,4 +1,4 @@
-
+use std::convert::TryFrom;
 
 use nom::{IResult, branch::alt, bytes::complete::tag, combinator::{map_res}};
 
@@ -56,9 +56,11 @@ fn parse_tx_amount(input: &str) -> IResult<&str, TxAmount> {
             _,
             tx_amount2,
         ))) => {
-            let tx_amount = TxAmount::from((tx_amount1, tx_amount2));
-
-            Ok((input, tx_amount))
+            if let Ok(tx_amount) = TxAmount::try_from((tx_amount1, tx_amount2)) {
+                Ok((input, tx_amount))
+            } else {
+                Err(nom::Err::Error(nom::error::Error::new(input, nom::error::ErrorKind::Count)))
+            }
         },
         Err(e) => Err(e),
     }
